@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import "./style.ccs";
+import "./style.css";
 
 const Register = () => {
     const [email, setEmail] = useState('');
