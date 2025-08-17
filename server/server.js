@@ -129,5 +129,3 @@ app.listen(port, async () => {
   await initFiles();
   console.log(`Сервер запущен на http://localhost:${port}`);
 });
-
-//Hi, am new commit!
