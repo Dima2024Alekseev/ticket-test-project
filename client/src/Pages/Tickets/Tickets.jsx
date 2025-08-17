@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import "./style.css";
 
 const Tickets = () => {
     const [tickets, setTickets] = useState([]);

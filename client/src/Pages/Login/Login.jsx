@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import "./style.css";
 
 const Login = ({ setIsAuthenticated }) => {
   const [email, setEmail] = useState('');

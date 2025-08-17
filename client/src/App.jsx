@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
-import './styles/index.css';
-import Login from './Pages/Login';
-import Register from './Pages/Register';
-import Tickets from './Pages/Tickets';
+import './styles/main.css';
+import Login from './Pages/Login/Login';
+import Register from './Pages/Register/Register';
+import Tickets from './Pages/Tickets/Tickets';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
