@@ -58,47 +58,52 @@ const Tickets = () => {
     };
 
     return (
-        <div className="container">
-            <h2 className="text-2xl font-bold mb-4 text-center">Система тикетов</h2>
-            {error && <p className="text-danger-color mb-4">{error}</p>}
+        <div className="tickets-container">
+            <div className="tickets-header">
+                <h2>Система тикетов</h2>
+            </div>
 
-            <div className="mb-6 p-4 bg-light-color rounded-lg shadow">
-                <h3 className="text-xl font-semibold mb-2">Создать тикет</h3>
+            {error && <div className="tickets-error">{error}</div>}
+
+            <div className="create-ticket-card">
+                <h3>Создать тикет</h3>
                 <input
                     type="text"
                     placeholder="Заголовок"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full p-2 mb-2 border rounded"
+                    className="ticket-input"
                 />
                 <textarea
                     placeholder="Описание"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full p-2 mb-2 border rounded"
+                    className="ticket-input ticket-textarea"
                 />
                 <button
                     onClick={handleCreateTicket}
-                    className="btn primary w-full"
+                    className="create-ticket-btn"
                 >
                     Создать
                 </button>
             </div>
 
-            <div>
-                <h3 className="text-xl font-semibold mb-2">Тикеты</h3>
+            <div className="tickets-list">
+                <h3>Тикеты</h3>
                 {tickets.length === 0 ? (
-                    <p className="text-gray-500">Тикетов пока нет.</p>
+                    <div className="no-tickets">Тикетов пока нет.</div>
                 ) : (
                     tickets.map(ticket => (
-                        <div key={ticket.id} className="p-4 mb-2 bg-white rounded-lg shadow">
-                            <h4 className="text-lg font-semibold">{ticket.title}</h4>
-                            <p className="text-gray-600">{ticket.description}</p>
-                            <p className="text-sm text-gray-500">Статус: {ticket.status}</p>
+                        <div key={ticket.id} className="ticket-card">
+                            <h4 className="ticket-title">{ticket.title}</h4>
+                            <p className="ticket-description">{ticket.description}</p>
+                            <span className={`ticket-status ${ticket.status}`}>
+                                {ticket.status === 'open' ? 'Открыт' : 'Закрыт'}
+                            </span>
                             {ticket.status === 'open' && (
                                 <button
                                     onClick={() => handleUpdateStatus(ticket.id, 'closed')}
-                                    className="btn primary mt-2"
+                                    className="resolve-btn"
                                 >
                                     Отметить как решённый
                                 </button>

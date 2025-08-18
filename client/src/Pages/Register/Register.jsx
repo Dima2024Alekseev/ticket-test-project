@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { FiMail, FiLock, FiArrowRight } from 'react-icons/fi';
 import "./style.css";
 
 const Register = () => {
@@ -14,40 +15,69 @@ const Register = () => {
             await axios.post('http://localhost:5000/api/register', { email, password });
             window.location.href = '/login';
         } catch (err) {
-            setError('Ошибка регистрации. Попробуйте снова.');
+            setError(err.response?.data?.message || 'Ошибка регистрации. Попробуйте снова.');
         }
     };
 
     return (
-        <div className="container">
-            <h2 className="text-2xl font-bold mb-4 text-center">Регистрация</h2>
-            {error && <p className="text-danger-color mb-4">{error}</p>}
-            <form onSubmit={handleRegister} className="max-w-md mx-auto">
-                <div className="mb-4">
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="w-full p-2 border rounded"
-                    />
+        <div className="register-container">
+            <div className="register-card">
+                <div className="register-header">
+                    <h2>Создайте аккаунт</h2>
+                    <p>Зарегистрируйтесь, чтобы начать работу</p>
                 </div>
-                <div className="mb-4">
-                    <input
-                        type="password"
-                        placeholder="Пароль"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="w-full p-2 border rounded"
-                    />
+
+                {error && (
+                    <div className="register-error">
+                        {error}
+                    </div>
+                )}
+
+                <form onSubmit={handleRegister} className="register-form">
+                    <div className={`input-group ${email ? 'filled' : ''}`}>
+                        <div className="input-icon">
+                            <FiMail />
+                        </div>
+                        <div className="input-field">
+                            <label htmlFor="email">Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div className={`input-group ${password ? 'filled' : ''}`}>
+                        <div className="input-icon">
+                            <FiLock />
+                        </div>
+                        <div className="input-field">
+                            <label htmlFor="password">Пароль</label>
+                            <input
+                                type="password"
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <button type="submit" className="register-button">
+                        Зарегистрироваться <FiArrowRight className="arrow-icon" />
+                    </button>
+                </form>
+
+                <div className="register-footer">
+                    <span>Уже есть аккаунт?</span>
+                    <Link to="/login" className="login-link">
+                        Войти
+                    </Link>
                 </div>
-                <button type="submit" className="btn primary w-full">
-                    Зарегистрироваться
-                </button>
-            </form>
-            <p className="mt-4 text-center">
-                Уже есть аккаунт? <Link to="/login" className="text-primary-color">Войдите</Link>
-            </p>
+            </div>
         </div>
     );
 };

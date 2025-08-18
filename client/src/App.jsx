@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './styles/main.css';
+import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
 import Login from './Pages/Login/Login';
 import Register from './Pages/Register/Register';
 import Tickets from './Pages/Tickets/Tickets';
+import Home from './Pages/Home/Home';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
@@ -25,41 +28,11 @@ const App = () => {
   return (
     <Router>
       <div className="app">
-        <nav className="navbar">
-          <div className="container">
-            <Link to="/" className="logo">Ticket System</Link>
-            <div className="nav-links">
-              {isAuthenticated ? (
-                <>
-                  <Link to="/tickets" className="nav-link">Tickets</Link>
-                  <button onClick={handleLogout} className="nav-link">
-                    Выйти
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link to="/login" className="nav-link">Вход</Link>
-                  <Link to="/register" className="nav-link">Регистрация</Link>
-                </>
-              )}
-            </div>
-          </div>
-        </nav>
+        <Header isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
 
         <main className="main-content">
           <Routes>
-            <Route path="/" element={
-              <div className="hero">
-                <div className="container">
-                  <h1>Welcome to Ticket Support System</h1>
-                  <p>Efficient way to manage and resolve customer issues</p>
-                  <div className="cta-buttons">
-                    <Link to="/login" className="btn primary">Get Started</Link>
-                    <Link to="/register" className="btn secondary">Learn More</Link>
-                  </div>
-                </div>
-              </div>
-            } />
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
             <Route path="/register" element={<Register />} />
             <Route
@@ -69,11 +42,7 @@ const App = () => {
           </Routes>
         </main>
 
-        <footer className="footer">
-          <div className="container">
-            <p>© {new Date().getFullYear()} Ticket System. All rights reserved.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </Router>
   );
